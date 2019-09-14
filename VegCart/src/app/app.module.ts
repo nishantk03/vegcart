@@ -8,6 +8,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth'
 
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {CustomFormsModule} from 'ng2-validation';
 
 
 import { AppComponent } from './app.component';
@@ -52,6 +53,7 @@ import { ProductService } from './product.service';
     AngularFireAuthModule,
     AngularFireDatabaseModule,
     FormsModule,
+    CustomFormsModule,
     NgbModule.forRoot(),//https://ng-bootstrap.github.io/#/components/dropdown/examples
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
