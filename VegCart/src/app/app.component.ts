@@ -12,24 +12,29 @@ import { UserService } from './user.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnDestroy{
- private _onDestroy: Subject<any> = new Subject();
+export class AppComponent implements OnDestroy {
+  private _onDestroy: Subject<any> = new Subject();
 
-  constructor(private auth:AuthService,
-              private router:Router,
-              private userService:UserService){
+  constructor(private auth: AuthService,
+    private router: Router,
+    private userService: UserService) {
     auth.user$
-    .pipe(takeUntil(this._onDestroy))
-    .subscribe(user=>{
-      if(user){
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(user => {
+        if (!user) return;
+
         userService.save(user);
-        let returnUrl = localStorage.getItem('returnUrl');
+
+        const returnUrl = localStorage.getItem('returnUrl');
+       
+        if (!returnUrl) return;
+
+        localStorage.removeItem('returnUrl');
         router.navigateByUrl(returnUrl);
-      }
-    });
+      });
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this._onDestroy.unsubscribe();
   }
 }
